@@ -1,24 +1,21 @@
 package ccd.antlr;
 
 
-import ccd.model.Body;
-import ccd.model.Head;
+import ccd.model.Sequence;
 import java8.Java8BaseVisitor;
 import java8.Java8Parser;
-import java8.Java8Visitor;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.RuleNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.antlr.v4.runtime.tree.pattern.RuleTagToken;
-import test.Main;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 public class GenAST extends Java8BaseVisitor<Integer> {
     private String filename;//检测文件的文件名
+
+    public static Stack<Sequence> sequenceStack = new Stack<Sequence>();
 
     @Override
     public Integer visitCompilationUnit(Java8Parser.CompilationUnitContext ctx) {
@@ -43,13 +40,15 @@ public class GenAST extends Java8BaseVisitor<Integer> {
             //gml.visitChildren(node);//visit方式主要包含了rulenode 和 terminalnode两种(其实还有一种errornode),即遍历AST所有结点
             gml.visit(node);
 
-            StringBuffer head = new StringBuffer();//filename : start : end
+            Sequence codeSequence = new Sequence();
+            //codeSequence.setPackageName("");
+            codeSequence.setFileName(filename);
+            codeSequence.setStartLine(gml.getRuleLine().get(0));//该函数在源文件开始的第一行
+            codeSequence.setEndLine(gml.getRuleLine().get(gml.getRuleLine().size()-1));//该函数在源文件的最后一行
             List<Integer> body = gml.getMethodNode();
-            head.append(filename)//文件名
-                 .append(gml.getHeadString().get(0).toString())//该函数在源文件开始的第一行
-                 .append(gml.getHeadString().get(gml.getHeadString().size()-1).toString());//该函数在源文件的最后一行
-            Main.codeSequence.put(head.toString(),body);
-            head = null;//清除stringbuffer
+            codeSequence.setBody(body);
+
+            sequenceStack.add(codeSequence);
         }
 
         for(int i = 0; i < n && this.shouldVisitNextChild(node, result); ++i) {

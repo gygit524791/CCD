@@ -1,8 +1,5 @@
-package ccd.detection;
+package ccd.stringDetection;
 
-import ccd.model.Sequence;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,9 +13,30 @@ public class GenMatrix {
     public static int A = 1;
     public static int B = -1;
 
-    public static int[][] genMatrix(Sequence s, Sequence t, int threshold){
-        s_size = s.getBody().size();//list s的长度
-        t_size = t.getBody().size();//list t的长度
+    public static void main(String args[]) {
+        //abcdefgghijklmnkopnq
+        //abcdxyefgxygxyhijklxynqqkopnq
+        //70 71 72 73 75 76 77 77 84 126 127 128 129 130 207 128 131 163 207 29
+        //70 71 72 73 3  5  75 76 77 3   5   77  3   5   84  126 127 128 129 130  3  5 207 29 29 128 131 163 207 29
+        String s = "abcdefgghijklmnkopnq";
+        String t = "abcdxyefgxygxyhijklxynqqkopnq";
+/*
+        String s = "ggggggyrgtrrvgabcdefghijklmnopqrsjtuv";
+        String t = "ggggggjhythttgabcxdefghiymzjlukpqsjtuv";
+*/
+
+/*
+        String s = "abcdefghi  pqrsjtuv";
+        String t = "pqrsjtuv  abcdefghi";
+*/
+        int threshold = 5;//得分阈值
+        int [][] test = genMatrix(s,t,threshold);
+        showMatrix(test,s,t);//展示
+    }
+
+    public static int[][] genMatrix(String s,String t,int threshold){
+        s_size = s.length();//字符串s的长度
+        t_size = t.length();//字符串t的长度
 
         M_matrix = new int [s_size+1][t_size+1];
         H_matrix = new int [s_size+1][t_size+1];
@@ -34,7 +52,7 @@ public class GenMatrix {
         //构造矩阵
         for(int i = 1; i <= s_size; i++){
             for(int j = 1; j <= t_size; j++){
-                if(s.getBody().get(i-1).intValue() == t.getBody().get(j-1).intValue()){
+                if(s.charAt(i-1) == t.charAt(j-1)){
                     A = 1;
                 }else{
                     A = -1;
@@ -43,7 +61,7 @@ public class GenMatrix {
                 if(M_matrix[i][j] == 0){
                     H_matrix[i][j] = 0;
                 }
-                if(s.getBody().get(i-1).intValue() == t.getBody().get(j-1).intValue()){
+                if(s.charAt(i-1) == t.charAt(j-1)){
                     H_matrix[i][j] = Math.max(M_matrix[i-1][j-1],H_matrix[i-1][j-1]);
                 }else{
                     //候选值
@@ -62,28 +80,22 @@ public class GenMatrix {
         return M_matrix;
     }
 
-    //打印矩阵-int list
-    public static void printMatrix(int[][] matrix,Sequence s,Sequence t){
+    //打印矩阵
+    public static  void showMatrix(int[][] matrix,String s,String t){
         for(int i = 0; i < s_size+1; i++){
+
             if(i == 0){//字符s(第0列)
-                System.out.print("      ");
+                System.out.print("  ");
             }else if(i< s_size+1){
-                String si = s.getBody().get(i-1)+"";
-                if(si.length()==1){
-                    System.out.print(s.getBody().get(i-1)+"     ");
-                }else if(si.length()==2){
-                    System.out.print(s.getBody().get(i-1)+"    ");
-                }else{
-                    System.out.print(s.getBody().get(i-1)+"   ");
-                }
+                System.out.print(s.charAt(i-1)+" ");
             }
 
             if(i == 0){//字符t(第0行)
                 for (int j = 0; j < t_size; j++){
                     if(j==0){
-                        System.out.print("    "+t.getBody().get(j)+"   ");
+                        System.out.print("    "+t.charAt(j)+"   ");
                     }else{
-                        System.out.print(t.getBody().get(j)+"   ");
+                        System.out.print(t.charAt(j)+"   ");
                     }
                 }
                 System.out.println();
@@ -91,12 +103,10 @@ public class GenMatrix {
 
             for (int j = 0; j < t_size+1; j++){//矩阵
                 String spaceLen = "";
-                if((matrix[i][j]+"").length()==1){
-                    spaceLen  = "   ";
-                }else if((matrix[i][j]+"").length()==2){
+                if((matrix[i][j]+"").length()>=2){
                     spaceLen  = "  ";
                 }else{
-                    spaceLen  = " ";
+                    spaceLen  = "   ";
                 }
 
                 System.out.print(matrix[i][j]+spaceLen);

@@ -1,4 +1,4 @@
-package ccd.detection;
+package ccd.stringDetection;
 
 public class MatchString {
     StringBuffer matchS = new StringBuffer();

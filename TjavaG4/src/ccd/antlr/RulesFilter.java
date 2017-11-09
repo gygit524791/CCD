@@ -1,7 +1,90 @@
 package ccd.antlr;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RulesFilter {
 
+
+
+    public static List<Integer> rulesFilter(){
+        List<Integer> rulesfilter = new ArrayList<Integer>();
+        rulesfilter.add(RULE_literal);
+        rulesfilter.add(RULE_type);
+        rulesfilter.add(RULE_numericType);
+        rulesfilter.add(RULE_integralType);
+        rulesfilter.add(RULE_floatingPointType);
+        rulesfilter.add(RULE_referenceType);
+        rulesfilter.add(RULE_classOrInterfaceType);
+        rulesfilter.add(RULE_classType);
+        rulesfilter.add(RULE_classType_lf_classOrInterfaceType);
+        rulesfilter.add(RULE_interfaceType);
+        rulesfilter.add(RULE_typeVariable);
+        rulesfilter.add(RULE_arrayType);
+        rulesfilter.add(RULE_typeParameter);
+        rulesfilter.add(RULE_typeParameterModifier);
+        rulesfilter.add(RULE_typeBound);
+        rulesfilter.add(RULE_additionalBound);
+        rulesfilter.add(RULE_typeArguments);
+        rulesfilter.add(RULE_typeArgumentList);
+        rulesfilter.add(RULE_typeArgument);
+        rulesfilter.add(RULE_wildcard);
+        rulesfilter.add(RULE_wildcardBounds);
+        rulesfilter.add(RULE_typeName);
+        rulesfilter.add(RULE_ambiguousName);
+        rulesfilter.add(RULE_typeDeclaration);
+        rulesfilter.add(RULE_methodName);
+        rulesfilter.add(RULE_expressionName);
+        rulesfilter.add(RULE_compilationUnit);
+        rulesfilter.add(RULE_classMemberDeclaration);
+        rulesfilter.add(RULE_fieldModifier);
+        rulesfilter.add(RULE_typeParameterList);
+        rulesfilter.add(RULE_methodBody);
+        rulesfilter.add(RULE_methodHeader);
+        rulesfilter.add(RULE_formalParameters);
+        rulesfilter.add(RULE_formalParameterList);
+        rulesfilter.add(RULE_block);
+        rulesfilter.add(RULE_enumBody);
+        rulesfilter.add(RULE_switchBlockStatementGroup);
+        rulesfilter.add(RULE_continueStatement);
+        rulesfilter.add(RULE_enhancedForStatementNoShortIf);
+        rulesfilter.add(RULE_statement);
+        rulesfilter.add(RULE_localVariableDeclaration);
+        rulesfilter.add(RULE_blockStatements);
+        rulesfilter.add(RULE_whileStatement);
+        rulesfilter.add(RULE_arrayInitializer);
+        rulesfilter.add(RULE_blockStatement);
+        rulesfilter.add(RULE_formalParameter);
+        rulesfilter.add(RULE_switchLabels);
+        rulesfilter.add(RULE_methodModifier);
+        rulesfilter.add(RULE_variableModifier);
+        rulesfilter.add(RULE_result);
+        rulesfilter.add(RULE_methodDeclaration);
+        rulesfilter.add(RULE_breakStatement);
+        rulesfilter.add(RULE_returnStatement);
+        rulesfilter.add(RULE_enhancedForStatement);
+        rulesfilter.add(RULE_localVariableDeclarationStatement);
+        rulesfilter.add(RULE_methodReference);
+        rulesfilter.add(RULE_whileStatementNoShortIf);
+        rulesfilter.add(RULE_forStatementNoShortIf);
+        rulesfilter.add(RULE_enumBodyDeclarations);
+        rulesfilter.add(RULE_expression);
+        rulesfilter.add(RULE_doStatement);
+        rulesfilter.add(RULE_andExpression);
+        rulesfilter.add(RULE_ifThenStatement);
+        rulesfilter.add(RULE_ifThenElseStatementNoShortIf);
+        rulesfilter.add(RULE_forStatement);
+        rulesfilter.add(RULE_expressionStatement);
+        rulesfilter.add(RULE_ifThenElseStatement);
+        rulesfilter.add(RULE_switchStatement);
+        rulesfilter.add(RULE_fieldAccess);
+
+
+
+
+
+        return rulesfilter;
+    }
 
     public static final int
             RULE_literal = 0, RULE_type = 1, RULE_primitiveType = 2, RULE_numericType = 3,

@@ -1,4 +1,4 @@
-package ccd.detection;
+package ccd.stringDetection;
 /**
  * 优化后的得分矩阵中的元素
  *

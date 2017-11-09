@@ -11,7 +11,7 @@ import java.util.List;
 
 public class GenMethodList extends Java8BaseVisitor<Integer> {
     private List<Integer> methodNode = new ArrayList<Integer>();
-    private List<String> headString = new ArrayList<String>();
+    private List<Integer> ruleLine = new ArrayList<Integer>();//method 内规则在源码出现的行号
 
     @Override
     public Integer visit(ParseTree tree) {
@@ -20,8 +20,12 @@ public class GenMethodList extends Java8BaseVisitor<Integer> {
 
     @Override
     public Integer visitChildren(RuleNode node) {
+        int ruleIndex = node.getRuleContext().getRuleIndex();
         //rules filter
-        methodNode.add(node.getRuleContext().getRuleIndex());
+        List<Integer> rulesfilter = RulesFilter.rulesFilter();
+        if(rulesfilter.contains(ruleIndex)){
+            methodNode.add(ruleIndex);
+        }
         Integer result = this.defaultResult();
         int n = node.getChildCount();
         for(int i = 0; i < n && this.shouldVisitNextChild(node, result); ++i) {
@@ -36,7 +40,7 @@ public class GenMethodList extends Java8BaseVisitor<Integer> {
     public Integer visitTerminal(TerminalNode node) {
         //String tokenName = node.getText();//具体的token
         int line = node.getSymbol().getLine();
-        headString.add(":"+line);
+        ruleLine.add(line);
         return this.defaultResult();
     }
 
@@ -44,8 +48,11 @@ public class GenMethodList extends Java8BaseVisitor<Integer> {
     public void setMethodNode(List<Integer> methodNode) {
         this.methodNode = methodNode;
     }
-    public List<String> getHeadString() { return headString; }
-    public void setHeadString(List<String> headString) {
-        this.headString = headString;
+    public List<Integer> getRuleLine() {
+        return ruleLine;
+    }
+
+    public void setRuleLine(List<Integer> ruleLine) {
+        this.ruleLine = ruleLine;
     }
 }
