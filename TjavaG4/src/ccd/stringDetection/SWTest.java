@@ -20,8 +20,8 @@ public class SWTest {
     @Test
     public void testStr1 (){
         //完全相同
-        String s = "abcdefghijklmnopqrst";
-        String t = "abcdefghijklmnopqrst";
+        String s = "aaaaaklmdddddnopqrsaaaaat";
+        String t = "abcdaaaaalmewfwfenopqrst";
         int threshold = 5;//阈值
         testResult(s,t,threshold);
     }

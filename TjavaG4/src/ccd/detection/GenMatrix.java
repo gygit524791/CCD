@@ -1,6 +1,7 @@
 package ccd.detection;
 
 import ccd.model.Sequence;
+import ccd.detection.CandidateNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +61,25 @@ public class GenMatrix {
             }
         }
         return M_matrix;
+    }
+
+    //获取候选回溯结点集合
+    public static List<CandidateNode> getCandidateNodeList(int threshold){
+        List<CandidateNode> candidateNodeList = new ArrayList<>();
+        CandidateNode candidateNode;
+        for (int i = 0; i < s_size+1; i++) {
+            for (int j = 0; j < t_size+1; j++) {
+                if((M_matrix[i][j] >= threshold) && (M_matrix[i][j]> H_matrix[i][j])){
+                    candidateNode = new CandidateNode();
+                    candidateNode.row = i;
+                    candidateNode.col = j;
+                    candidateNode.score = M_matrix[i][j];
+                    //candidateNode.visited = false;
+                    candidateNodeList.add(candidateNode);
+                }
+            }
+        }
+        return candidateNodeList;
     }
 
     //打印矩阵-int list

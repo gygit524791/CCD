@@ -23,11 +23,13 @@ public class GenMethodList extends Java8BaseVisitor<Integer> {
         int ruleIndex = node.getRuleContext().getRuleIndex();
         //rules filter
         List<Integer> rulesfilter = RulesFilter.rulesFilter();
+
         if(rulesfilter.contains(ruleIndex)){
             methodNode.add(ruleIndex);
         }
         Integer result = this.defaultResult();
         int n = node.getChildCount();
+
         for(int i = 0; i < n && this.shouldVisitNextChild(node, result); ++i) {
             ParseTree c = node.getChild(i);
             Integer childResult = c.accept(this);

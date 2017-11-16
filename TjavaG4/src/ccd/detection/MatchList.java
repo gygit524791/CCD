@@ -5,7 +5,7 @@ import ccd.model.Sequence;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchList {
+public class MatchList {//收集回溯结果
     public Sequence s_Sequence;
     public Sequence t_Sequence;
     public List<Integer> matchLS = new ArrayList<Integer>();

@@ -1,11 +1,12 @@
 package ccd.stringDetection;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GenMatrix {
-    public static  int[][] M_matrix;//原始得分矩阵
-    public static  int[][] H_matrix;//优化得分矩阵
+    public static int[][] M_matrix;//原始得分矩阵
+    public static int[][] H_matrix;//优化得分矩阵
 
     public static int s_size;
     public static int t_size;
@@ -18,8 +19,19 @@ public class GenMatrix {
         //abcdxyefgxygxyhijklxynqqkopnq
         //70 71 72 73 75 76 77 77 84 126 127 128 129 130 207 128 131 163 207 29
         //70 71 72 73 3  5  75 76 77 3   5   77  3   5   84  126 127 128 129 130  3  5 207 29 29 128 131 163 207 29
+/*
         String s = "abcdefgghijklmnkopnq";
         String t = "abcdxyefgxygxyhijklxynqqkopnq";
+*/
+
+        String s = "abcdefghi  pqrsjtuv";
+        String t = "pqrsjtuv  abcdefghi";
+
+        /*
+        String s = "abcdefghijklmnopqrsjtuv";
+        String t = "abcxdefghiymzjlukpqsjtuv";
+        */
+
 /*
         String s = "ggggggyrgtrrvgabcdefghijklmnopqrsjtuv";
         String t = "ggggggjhythttgabcxdefghiymzjlukpqsjtuv";
@@ -32,6 +44,8 @@ public class GenMatrix {
         int threshold = 5;//得分阈值
         int [][] test = genMatrix(s,t,threshold);
         showMatrix(test,s,t);//展示
+
+        getCandidateNodeList(threshold);
     }
 
     public static int[][] genMatrix(String s,String t,int threshold){
@@ -78,6 +92,25 @@ public class GenMatrix {
             }
         }
         return M_matrix;
+    }
+
+    //获取候选回溯结点集合
+    public static List<CandidateNode> getCandidateNodeList(int threshold){
+        List<CandidateNode> candidateNodeList = new ArrayList<>();
+        CandidateNode candidateNode;
+        for (int i = 0; i < s_size+1; i++) {
+            for (int j = 0; j < t_size+1; j++) {
+                if((M_matrix[i][j] >= threshold) && (M_matrix[i][j]> H_matrix[i][j])){
+                    candidateNode = new CandidateNode();
+                    candidateNode.row = i;
+                    candidateNode.col = j;
+                    candidateNode.score = M_matrix[i][j];
+                    //candidateNode.visited = false;
+                    candidateNodeList.add(candidateNode);
+                }
+            }
+        }
+        return candidateNodeList;
     }
 
     //打印矩阵
